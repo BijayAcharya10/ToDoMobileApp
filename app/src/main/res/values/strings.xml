@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">FinalToDoApp</string>
+    <string name="login_top_text">Already Have An Account?</string>
+    <string name="signup_top_text">SignUp Here For New Account?</string>
+    <string name="login">LOGIN</string>
+    <string name="signup">SIGNUP</string>
+    <string name="login_signup">New User? Register Now</string>
+    <string name="signup_login">Already User? SignIn Now</string>
+    <string name="error_valid_username_password">Invalid Credentials</string>
+</resources>
