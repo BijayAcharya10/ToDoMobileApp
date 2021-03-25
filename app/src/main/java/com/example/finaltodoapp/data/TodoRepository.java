@@ -1,42 +1,56 @@
-//package com.example.finaltodoapp.data;
-//
-//import android.app.Application;
-//import android.os.AsyncTask;
-//
-//import com.example.finaltodoapp.model.ETodo;
-//import com.example.finaltodoapp.model.ToDoDAO;
-//
-//public class TodoRepository {
-//    private ToDoDAO mTodoDAO;
-//    public TodoRepository(Application application){
-//        TodoRoomDatabase database = TodoRoomDatabase.getDatabase(application);
-//        mTodoDAO = database.mTodoDAO();
-//    }
-//
-//    public ToDoDAO getmTodoDAO() {
-//        return mTodoDAO;
-//    }
-//
-//    public void setmTodoDAO(ToDoDAO mTodoDAO) {
-//        this.mTodoDAO = mTodoDAO;
-//    }
-//
-//    private static class insertTodoAsyncTask extends AsyncTask<ETodo,Void,Void> {
-//        private ToDoDAO mTodoDao;
-//        private insertTodoAsyncTask(ToDoDAO todoDAO){
-//            mTodoDao = todoDAO;
-//        }
-//
-//        @Override
-//        protected Void doInBackground(ETodo... etTodos){ ///... signifies the collection
-//            mTodoDao.insert(etTodos[0]);
-//            return null;
-//        }
-//
-//        public void insert(ETodo eTodo){
-//            new insertTodoAsyncTask(mTodoDao).execute(eTodo);
-//        }
-//
-//    }
-//
-//}
+package com.example.finaltodoapp.data;
+
+import android.app.Application;
+import android.os.AsyncTask;
+
+import androidx.lifecycle.LiveData;
+
+import com.example.finaltodoapp.model.ETodo;
+import com.example.finaltodoapp.model.TodoRoomDatabase;
+
+import java.util.List;
+
+
+public class TodoRepository {
+    private TodoDAO mTodoDAO;
+    private LiveData<List<ETodo>> allTodoList;
+
+    public TodoRepository(Application application){
+        TodoRoomDatabase database = TodoRoomDatabase.getDatabase(application);
+        mTodoDAO = database.mTodoDao();
+        allTodoList = mTodoDAO.getAllTodos();
+    }
+
+    public TodoDAO getmTodoDAO() {
+        return mTodoDAO;
+    }
+
+    public void setmTodoDAO(TodoDAO mTodoDAO) {
+        this.mTodoDAO = mTodoDAO;
+    }
+
+    public LiveData<List<ETodo>> getAllTodoList() {
+        return allTodoList;
+    }
+
+    public void setAllTodoList(LiveData<List<ETodo>> allTodoList) {
+        this.allTodoList = allTodoList;
+    }
+
+    public void insert(ETodo eTodo){
+        new insertTodoAysncTask(mTodoDAO).execute(eTodo);
+    }
+
+    private static class insertTodoAysncTask extends AsyncTask<ETodo, Void, Void> {
+        private TodoDAO mTodoDao;
+        private insertTodoAysncTask(TodoDAO todoDAO){
+            mTodoDao=todoDAO;
+        }
+
+        @Override
+        protected Void doInBackground(ETodo... eTodos) {
+            mTodoDao.insert(eTodos[0]);
+            return null;
+        }
+    }
+}

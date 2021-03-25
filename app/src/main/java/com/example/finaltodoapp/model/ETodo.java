@@ -1,98 +1,96 @@
-//package com.example.finaltodoapp.model;
-//
-//import androidx.room.ColumnInfo;
-//import androidx.room.Entity;
-//import androidx.room.Ignore;
-//import androidx.room.PrimaryKey;
-//
-//import java.util.Date;
-//
-//@Entity
-//public class ETodo {
-//    @Ignore
-//    public ETodo() {
-//    }
-//
-//    public ETodo(String title, String description, Integer priority, Date taskDate, Boolean isComplete) {
-//        this.title = title;
-//        this.description = description;
-//        this.priority = priority;
-//        this.taskDate = taskDate;
-//        this.isComplete = isComplete;
-//    }
-//
-//    @ColumnInfo(name="id")
-//    @PrimaryKey(autoGenerate = true)
-//    Integer id;
-//    public Integer getId() {
-//        return id;
-//    }
-//
-//    public void setId(Integer id) {
-//        this.id = id;
-//    }
-//
-//
-//    @ColumnInfo(name = "title")
-//    String title;
-//    public String getTitle() {
-//        return title;
-//    }
-//
-//    public void setTitle(String title) {
-//        this.title = title;
-//    }
-//
-//    @ColumnInfo(name="description")
-//    String description;
-//    public String getDescription() {
-//        return description;
-//    }
-//
-//    public void setDescription(String description) {
-//        this.description = description;
-//    }
-//
-//
-//    @ColumnInfo(name="priority")
-//    Integer priority;
-//    public Integer getPriority() {
-//        return priority;
-//    }
-//
-//    public void setPriority(Integer priority) {
-//        this.priority = priority;
-//    }
-//
-//
-//    @ColumnInfo(name = "taskDate")
-//    Date taskDate;
-//    public Date getTaskDate() {
-//        return taskDate;
-//    }
-//
-//    public void setTaskDate(Date taskDate) {
-//        this.taskDate = taskDate;
-//    }
-//
-//    @ColumnInfo(name="isComplete")
-//    Boolean isComplete;
-//    public Boolean getComplete() {
-//        return isComplete;
-//    }
-//
-//    public void setComplete(Boolean complete) {
-//        isComplete = complete;
-//    }
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//}
+package com.example.finaltodoapp.model;
+
+import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.Ignore;
+import androidx.room.PrimaryKey;
+import androidx.room.TypeConverters;
+
+
+import com.example.finaltodoapp.util.DateConverter;
+
+import java.util.Date;
+
+@Entity(tableName = "todo_table")
+public class ETodo {
+    @PrimaryKey(autoGenerate = true)
+    private int id;
+
+    @NonNull
+    @ColumnInfo(name = "title")
+    private String title;
+
+    @ColumnInfo(name = "description")
+    private String description;
+
+    @TypeConverters({DateConverter.class})
+    @ColumnInfo(name = "todo_date")
+    private Date todoDate;
+
+    @ColumnInfo(name = "priority")
+    private int priority;
+
+    @ColumnInfo(name = "is_completed")
+    private boolean isCompleted;
+    @Ignore
+    public ETodo() {
+    }
+
+    public ETodo(@NonNull String title, String description, Date todoDate, int priority, boolean isCompleted) {
+        this.title = title;
+        this.description = description;
+        this.todoDate = todoDate;
+        this.priority = priority;
+        this.isCompleted = isCompleted;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    @NonNull
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(@NonNull String title) {
+        this.title = title;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Date getTodoDate() {
+        return todoDate;
+    }
+
+    public void setTodoDate(Date todoDate) {
+        this.todoDate = todoDate;
+    }
+
+    public int getPriority() {
+        return priority;
+    }
+
+    public void setPriority(int priority) {
+        this.priority = priority;
+    }
+
+    public boolean isCompleted() {
+        return isCompleted;
+    }
+
+    public void setCompleted(boolean completed) {
+        isCompleted = completed;
+    }
+}
