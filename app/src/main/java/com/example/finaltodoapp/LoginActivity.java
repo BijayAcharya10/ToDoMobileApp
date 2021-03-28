@@ -9,7 +9,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import com.muddzdev.styleabletoast.StyleableToast;
 
 public class LoginActivity extends AppCompatActivity{
     private final AppCompatActivity activity = LoginActivity.this;
@@ -23,8 +24,40 @@ public class LoginActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        initViews();
+        Login();
+
+        txtSignUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(LoginActivity.this,RegisterActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
 
     }
 
+    void initViews(){
+        txtSignUp = (TextView) findViewById(R.id.txtsignup);
+        txtUsername = (EditText) findViewById(R.id.inputUsername);
+        txtPassword = (EditText) findViewById(R.id.inputPassword);
+        btnLogin = (Button) findViewById(R.id.btnSignup);
+    }
 
+    void Login(){
+        btnLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(txtUsername.getText().toString().equals("bijay") && txtPassword.getText().toString().equals("bijay")){
+                    StyleableToast.makeText(LoginActivity.this,"LoggedIn Successfully",R.style.successToast).show();
+                    Intent intent = new Intent(LoginActivity.this,MainActivity.class);
+                    startActivity(intent);
+                } else{
+                    StyleableToast.makeText(LoginActivity.this,"Invalid Credentials..Try Again",R.style.errorToast).show();
+                }
+            }
+        });
+
+    }
 }

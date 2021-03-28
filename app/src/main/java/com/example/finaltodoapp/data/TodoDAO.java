@@ -25,7 +25,7 @@ public interface  TodoDAO {
     void deleteById(ETodo todo);
 
     @Query("SELECT * FROM todo_table WHERE id=:id")
-    ETodo getTodoById(String id);
+    ETodo getTodoById(int id);
 
 
     @Update(onConflict = OnConflictStrategy.REPLACE)

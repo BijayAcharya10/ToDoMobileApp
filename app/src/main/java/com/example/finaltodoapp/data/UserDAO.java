@@ -1,17 +1,19 @@
 package com.example.finaltodoapp.data;
 
 import androidx.lifecycle.LiveData;
+import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Update;
 
-import com.example.finaltodoapp.model.ETodo;
+
 import com.example.finaltodoapp.model.User;
 
 import java.util.List;
 
+@Dao
 public interface UserDAO {
     @Insert
     void insert(User user);
@@ -23,7 +25,7 @@ public interface UserDAO {
     void deleteById(User user);
 
     @Query("SELECT * FROM user_table WHERE id=:id")
-    User getUserById(String id);
+    User getUserById(int id);
 
 
     @Update(onConflict = OnConflictStrategy.REPLACE)

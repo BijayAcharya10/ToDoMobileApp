@@ -41,6 +41,18 @@ public class TodoRepository {
         new insertTodoAysncTask(mTodoDAO).execute(eTodo);
     }
 
+    public void delete(ETodo eTodo){
+        new deleteTodoAysncTask(mTodoDAO).execute(eTodo);
+    }
+
+    public ETodo getTodoById(int id){
+        return  mTodoDAO.getTodoById(id);
+    }
+
+    public void update(ETodo eTodo){
+        new updateTodoAysncTask(mTodoDAO).execute(eTodo);
+    }
+
     private static class insertTodoAysncTask extends AsyncTask<ETodo, Void, Void> {
         private TodoDAO mTodoDao;
         private insertTodoAysncTask(TodoDAO todoDAO){
@@ -53,4 +65,31 @@ public class TodoRepository {
             return null;
         }
     }
+
+    private static class deleteTodoAysncTask extends AsyncTask<ETodo, Void, Void>{
+        private TodoDAO mTodoDao;
+        private deleteTodoAysncTask(TodoDAO todoDAO){
+            mTodoDao=todoDAO;
+        }
+
+        @Override
+        protected Void doInBackground(ETodo... eTodos) {
+            mTodoDao.deleteById(eTodos[0]);
+            return null;
+        }
+    }
+
+    private static class updateTodoAysncTask extends AsyncTask<ETodo, Void, Void>{
+        private TodoDAO mTodoDao;
+        private updateTodoAysncTask(TodoDAO todoDAO){
+            mTodoDao=todoDAO;
+        }
+
+        @Override
+        protected Void doInBackground(ETodo... eTodos) {
+            mTodoDao.update(eTodos[0]);
+            return null;
+        }
+    }
+
 }
