@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent" android:layout_height="fill_parent">
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -16,6 +21,7 @@
         android:layout_marginBottom="15dp"
         android:ems="10"
         android:hint="@string/edit_Title"
+        android:backgroundTint="@color/colorPrimary"
         android:inputType="textPersonName" />
 
     <EditText
@@ -29,6 +35,7 @@
         android:inputType="textMultiLine|textPersonName"
         android:lines="5"
         android:maxLines="5"
+        android:backgroundTint="@color/colorPrimary"
         android:scrollbars="vertical" />
 
     <EditText
@@ -38,6 +45,7 @@
         android:layout_marginBottom="15dp"
         android:ems="10"
         android:hint="@string/edit_Date"
+        android:backgroundTint="@color/colorPrimary"
         android:inputType="textPersonName" />
 
     <RadioGroup
@@ -45,6 +53,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="15dp"
+        android:backgroundTint="@color/colorPrimary"
         android:orientation="horizontal">
 
         <RadioButton
@@ -78,11 +87,13 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="25dp"
         android:textSize="14sp"
+        android:backgroundTint="@color/colorPrimary"
         android:text="@string/edit_isCompleted" />
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="72dp"
+        android:layout_marginTop="10dp"
         android:orientation="horizontal">
 
         <Button
@@ -92,10 +103,10 @@
             android:layout_marginRight="10dp"
             android:layout_weight="1"
             android:background="@drawable/round_bg"
+            android:text="@string/edit_Save"
             android:textColor="@android:color/white"
             android:textSize="14sp"
-            android:textStyle="bold"
-            android:text="@string/edit_Save" />
+            android:textStyle="bold" />
 
         <Button
             android:id="@+id/edit_fragment_btn_cancel"
@@ -104,10 +115,11 @@
             android:layout_marginLeft="10dp"
             android:layout_weight="1"
             android:background="@drawable/round_bg_cancel"
+            android:text="@string/cancel"
             android:textColor="@android:color/white"
             android:textSize="14sp"
             android:textStyle="bold"
-            android:text="@string/cancel" />
+            app:backgroundTint="@color/color_high" />
     </LinearLayout>
-
 </LinearLayout>
+</ScrollView>

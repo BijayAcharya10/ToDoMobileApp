@@ -152,10 +152,11 @@ public class ListTodoFragment extends Fragment {
 
             switch (todo.getPriority()) {
                 case 1:
+                   // layout.findViewById(R.id.list_item_tv_date).set(getResources().getColor(R.color.color_medium));
                     layout.setBackgroundColor(getResources().getColor(R.color.color_high));
                     break;
                 case 2:
-                    layout.setBackgroundColor(getResources().getColor(R.color.color_medium));
+                   layout.setBackgroundColor(getResources().getColor(R.color.color_medium));
                     break;
                 case 3:
                     layout.setBackgroundColor(getResources().getColor(R.color.color_low));

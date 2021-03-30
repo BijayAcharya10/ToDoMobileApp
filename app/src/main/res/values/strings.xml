@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">FinalToDoApp</string>
+    <string name="app_name">TODOIST</string>
     <string name="login_top_text">Already Have An Account?</string>
     <string name="signup_top_text">SignUp Here For New Account?</string>
     <string name="login">LOGIN</string>
@@ -22,6 +22,8 @@
     <string name="edit_Low">Low</string>
     <string name="edit_Save">Save</string>
     <string name="alert_cancel">Do you want to return to main screen?</string>
+    <string name="alert_delete_all">Do you want to delete all tasks?</string>
+    <string name="alert_delete_comp">Do you want to delete all completed tasks?</string>
     <string name="ok">OK</string>
     <string name="cancel">CANCEL</string>
     <!-- TODO: Remove or change this placeholder text -->

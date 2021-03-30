@@ -1,13 +1,12 @@
 package com.example.finaltodoapp;
 
-import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -20,12 +19,11 @@ import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioGroup;
-import android.widget.Toast;
 
 import com.example.finaltodoapp.model.ETodo;
 import com.example.finaltodoapp.viewModel.TodoViewModel;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.muddzdev.styleabletoast.StyleableToast;
-
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -47,12 +45,16 @@ public class EditTodoFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
         rootView =  inflater.inflate(R.layout.fragment_edit_todo, container, false);
-
+        ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
         initViews();
         loadUpdateData();
-
+        chComplete.setVisibility(View.GONE);
+        if(todoId >= 1){
+            chComplete.setVisibility(View.VISIBLE);
+        } else {
+            chComplete.setVisibility(View.GONE);
+        }
         txtDate.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -71,6 +73,7 @@ public class EditTodoFragment extends Fragment {
         });
 
         btnCancel.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
             public void onClick(View v) {
                 ShowAlertCancel();
@@ -111,49 +114,58 @@ public class EditTodoFragment extends Fragment {
 
     //Save Method
     void SaveTodo(){
-        ETodo eTodo = new ETodo();
-        Date todoDate = new Date();
-        int checkedPriority = -1;
-        int priority = 0;
-        try {
-            DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-            todoDate = format.parse(txtDate.getText().toString());
-        }catch (ParseException ex){
-            ex.printStackTrace();
+        if(txtTitle.getText().toString().equals("")
+                || txtDescription.getText().toString().equals("")
+                || txtDate.getText().toString().equals("")
+                || rgPriority.getCheckedRadioButtonId()==-1){
+            StyleableToast.makeText(getActivity(),"Enter Data In All Fields",R.style.errorToast).show();
+            return;
         }
-        checkedPriority = rgPriority.getCheckedRadioButtonId();
+        else{
+            ETodo eTodo = new ETodo();
+            Date todoDate = new Date();
+            int checkedPriority = -1;
+            int priority = 0;
+            try {
+                DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+                todoDate = format.parse(txtDate.getText().toString());
+            }catch (ParseException ex){
+                ex.printStackTrace();
+            }
+            checkedPriority = rgPriority.getCheckedRadioButtonId();
 
-        switch (checkedPriority){
-            case R.id.edit_fragment_rb_high:
-                priority = HIGH_PRIORITY;
-                break;
-            case R.id.edit_fragment_rb_medium:
-                priority=MEDIUM_PRIORITY;
-                break;
-            case R.id.edit_fragment_rb_low:
-                priority=LOW_PRIORITY;
-                break;
+            switch (checkedPriority){
+                case R.id.edit_fragment_rb_high:
+                    priority = HIGH_PRIORITY;
+                    break;
+                case R.id.edit_fragment_rb_medium:
+                    priority=MEDIUM_PRIORITY;
+                    break;
+                case R.id.edit_fragment_rb_low:
+                    priority=LOW_PRIORITY;
+                    break;
+            }
+
+            eTodo.setTitle(txtTitle.getText().toString());
+            eTodo.setDescription(txtDescription.getText().toString());
+            eTodo.setTodoDate(todoDate);
+            eTodo.setPriority(priority);
+            eTodo.setCompleted(chComplete.isChecked());
+
+            TodoViewModel viewModel  = new ViewModelProvider(this).get(TodoViewModel.class);
+            if(todoId != -1){
+             //   chComplete.setVisibility(View.VISIBLE);
+                eTodo.setId(todoId);
+                viewModel.update(eTodo);
+            } else {
+               // chComplete.setVisibility(View.INVISIBLE);
+                viewModel.insert(eTodo);
+            }
+            StyleableToast.makeText(getActivity(),"Todo Saved Successfully",R.style.successToast).show();
+            Intent intent= new Intent(getActivity(),MainActivity.class);
+            startActivity(intent);
         }
 
-
-        eTodo.setTitle(txtTitle.getText().toString());
-        eTodo.setDescription(txtDescription.getText().toString());
-        eTodo.setTodoDate(todoDate);
-        eTodo.setPriority(priority);
-        eTodo.setCompleted(chComplete.isChecked());
-
-        TodoViewModel viewModel  = new ViewModelProvider(this).get(TodoViewModel.class);
-
-        if(todoId != -1){
-            eTodo.setId(todoId);
-            viewModel.update(eTodo);
-        } else {
-            viewModel.insert(eTodo);
-        }
-
-        StyleableToast.makeText(getActivity(),"Todo Saved Successfully",R.style.successToast).show();
-        Intent intent= new Intent(getActivity(),MainActivity.class);
-        startActivity(intent);
     }
 
 
@@ -186,28 +198,26 @@ public class EditTodoFragment extends Fragment {
     }
 
 
-    ///Alert Dialog Box
+    //Alert Dialog Box
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)//for getdrawable method
     void ShowAlertCancel(){
-        AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
-        alertDialog.setMessage(getString(R.string.alert_cancel))
-                .setTitle(getString(R.string.app_name))
-                .setIcon(R.mipmap.ic_launcher)
-                .setCancelable(false)
-                .setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
+        new MaterialAlertDialogBuilder(getContext(),
+                R.style.MyThemeOverlay_MaterialComponents_MaterialAlertDialog)
+                .setTitle("To Do List")
+                .setMessage(getString(R.string.alert_cancel))
+                .setIcon(R.drawable.ic_back)
+                .setPositiveButton("YES", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        Intent intent = new Intent(getActivity(), MainActivity.class);
+                        Intent intent = new Intent(getActivity(),MainActivity.class);
                         startActivity(intent);
                     }
                 })
-                .setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
+                .setNegativeButton("NO", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-
                     }
-                });
-
-        alertDialog.show();
+                })
+                .show();
     }
-
 }

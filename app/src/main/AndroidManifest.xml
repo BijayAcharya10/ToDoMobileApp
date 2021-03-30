@@ -9,7 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.FinalToDoApp">
-        <activity android:name=".EditActivity"></activity>
+        <activity android:name=".EditActivity" android:configChanges="keyboardHidden|orientation|screenSize|screenLayout"></activity>
         <activity android:name=".SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -18,7 +18,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".RegisterActivity" />
-        <activity android:name=".LoginActivity"></activity>
+        <activity android:name=".LoginActivity" android:configChanges="keyboardHidden|orientation|screenSize|screenLayout"></activity>
         <activity android:name=".MainActivity" />
     </application>
 

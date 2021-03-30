@@ -15,7 +15,6 @@ public class EditActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit);
-
         fragmentManager = getSupportFragmentManager();
         fragment = new EditTodoFragment();
         fragmentManager.beginTransaction()
