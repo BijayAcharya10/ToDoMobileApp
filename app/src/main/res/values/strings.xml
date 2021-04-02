@@ -28,7 +28,7 @@
     <string name="cancel">CANCEL</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-
+    <string name="all_deleted">All Tasks Deleted</string>
     <string name="del_completed">Delete Completed</string>
     <string name="del_all">Delete All</string>
     <string name="logout">Log Out</string>
